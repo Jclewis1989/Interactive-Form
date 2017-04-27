@@ -45,22 +45,35 @@ function displayThemes() {
     // Identifying variables first
     var design = document.getElementById('design');
     var color = document.getElementById('color');
+    // color.value = 'Please Select Your Color';
 
     // Items within the select inputs
 
-    // Two event listeners depending on the designs
-
     design.addEventListener('change', function () {
-        if (design.value === 'heart js') {
-            for (var i = 0; i < color.length - 3; i++) {
-                if (color.length) {
-                    color[i].style.display = 'none';
-                } else if (color.length) {
-                    color[i].style.display !== 'none';
-                }
+        for (var i = 0; i < color.length - 3; i++) {
+            var colors = color[i];
+            if (design.value === 'js puns') {
+                color[i].style.display = 'block';
+            } else if (design.value === 'heart js') {
+                color[i].style.display = 'none';
+            } else {
+                color[i].style.display = 'block';
             }
         }
-    });
+    })
+
+    design.addEventListener('change', function () {
+        for (var i = 3; i < color.length; i++) {
+            var colors = color[i];
+            if (design.value === 'heart js') {
+                color[i].style.display = 'block';
+            } else if (design.value === 'js puns') {
+                color[i].style.display = 'none';
+            } else {
+                color[i].style.display = 'block';
+            }
+        }
+    })
 }
 
 displayThemes();
