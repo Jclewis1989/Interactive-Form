@@ -77,3 +77,34 @@ function displayThemes() {
 }
 
 displayThemes();
+
+
+/* Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
+
+When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
+
+As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
+*/
+
+function disableCheckbox() {
+    // Checkbox approach
+    var checkbox = document.querySelectorAll('.activities input');
+    console.log(checkbox);
+    
+    // Document Name approach
+    var all = document.querySelector('input[name="all"]');
+    var jsFramework = document.querySelector('input[name="js-frameworks"]');
+    var jsLibs = document.querySelector('input[name="js-libs"]');
+    var express = document.querySelector('input[name="express"]');
+    var node = document.querySelector('input[name="node"]');
+    var buildTools = document.querySelector('input[name="build-tools]');
+    var npm = document.querySelector('input[name="npm"]');
+
+    // Some Code
+
+    for (var i = 0; i < checkbox.length; i++) {
+        checkbox[i].addEventListener('click', function () {})
+    }
+}
+
+disableCheckbox();
