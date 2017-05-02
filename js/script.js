@@ -1,4 +1,3 @@
-"use strict";
 // When the page loads, give focus to the first text field
 
 window.addEventListener('load', function () {
@@ -100,91 +99,114 @@ function disableCheckbox() {
     var buildTools = document.querySelector('input[name="build-tools"]');
     var npm = document.querySelector('input[name="npm"]');
     var totalAmount = document.createElement('h2');
-    var value = 0;
     checkbox.parentNode.insertBefore(totalAmount, checkbox.nextElementSibling);
+    var value = 0;
 
     checkbox.addEventListener('change', function () {
-        if (all.checked) {
-            value += 200;
-            console.log(value);
-
-        } else {
-            value = 0;
-        }
 
         if (jsFramework.checked) {
             express.disabled = true;
             express.parentNode.className = 'line-through-checkbox';
-            value += 100;
-            console.log(value);
 
         } else if (jsFramework.checked === false) {
             express.disabled = false;
             express.parentNode.className = '';
-            value = 0;
-
-        } else {
-            return value;
         }
 
         if (express.checked === true) {
             jsFramework.disabled = true;
             jsFramework.parentNode.className = 'line-through-checkbox';
-            value += 100;
-            console.log(value);
 
         } else if (express.checked === false) {
             jsFramework.disabled = false;
             jsFramework.parentNode.className = '';
-            value = 0;
+        }
 
-        } else {
-            return value;
+        if (jsLibs.checked === true) {
+            node.disabled = true;
+            node.parentNode.className = 'line-through-checkbox';
+
+        } else if (jsLibs.checked === false) {
+            node.disabled = false;
+            node.parentNode.className = '';
+        }
+
+        if (node.checked === true) {
+            jsLibs.disabled = true;
+            jsLibs.parentNode.className = 'line-through-checkbox';
+
+        } else if (node.checked === false) {
+            jsLibs.disabled = false;
+            jsLibs.parentNode.className = '';
+        }
+
+    });
+
+    checkbox.addEventListener('change', function (e) {
+
+        var isChecked = e.target.checked
+
+        for (var i = 0; i < checkbox.children.length; i++) {
+            if (isChecked[i]) {
+                console.log(isChecked);
+                value += 100;
+                break;
+            } else {
+                value = 0;
+            }
+        }
+        if (jsFramework.checked) {
+            express.disabled = true;
+            express.parentNode.className = 'line-through-checkbox';
+            value += 100;
+
+        } else if (jsFramework.checked === false) {
+            express.disabled = false;
+            express.parentNode.className = '';
+            value = 0;
+        }
+        if (express.checked === true) {
+            jsFramework.disabled = true;
+            jsFramework.parentNode.className = 'line-through-checkbox';
+            value += 100;
+
+        } else if (express.checked === false) {
+            jsFramework.disabled = false;
+            jsFramework.parentNode.className = '';
         }
 
         if (jsLibs.checked === true) {
             node.disabled = true;
             node.parentNode.className = 'line-through-checkbox';
             value += 100;
-            console.log(value);
 
         } else if (jsLibs.checked === false) {
             node.disabled = false;
             node.parentNode.className = '';
-            value = 0;
-
-        } else {
-            return value;
         }
 
         if (node.checked === true) {
             jsLibs.disabled = true;
             jsLibs.parentNode.className = 'line-through-checkbox';
             value += 100;
-            console.log(value);
 
         } else if (node.checked === false) {
             jsLibs.disabled = false;
             jsLibs.parentNode.className = '';
-            value = 0;
+        }
 
-        }
-        
-        if(npm.checked === true) {
+        if (npm.checked === true) {
             value += 100;
-            console.log(value);
-        } else {
-            value = 0;
         }
-        
-        if(buildTools.checked === true)  {
+
+        if (buildTools.checked === true) {
             value += 100;
-            console.log(value);
-        } else {
-            value = 0;
         }
-        totalAmount.textContent = "TOTAL: $" + value + ".00";
+
+        totalAmount.innerHTML = 'Total: $' + value + '.00';
+
     });
+
 }
 
 disableCheckbox();
