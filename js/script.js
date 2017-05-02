@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 // When the page loads, give focus to the first text field
 
 window.addEventListener('load', function () {
@@ -81,15 +81,15 @@ displayThemes();
 
 
 /* Some events are at the same time as others. If the user selects a workshop, don't allow selection of a workshop at the same date and time -- you should disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
-
 When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
-
 As a user selects activities, a running total should display below the list of checkboxes. For example, if the user selects "Main Conference", then Total: $200 should appear. If they add 1 workshop, the total should change to Total: $300.
 */
 
 function disableCheckbox() {
+
     // Checkbox approach
     var checkbox = document.querySelector('.activities');
+
 
     // Document Name approach
     var all = document.querySelector('input[name="all"]');
@@ -99,98 +99,92 @@ function disableCheckbox() {
     var node = document.querySelector('input[name="node"]');
     var buildTools = document.querySelector('input[name="build-tools"]');
     var npm = document.querySelector('input[name="npm"]');
-    var value = 0;
-    var totals = "";
     var totalAmount = document.createElement('h2');
+    var value = 0;
     checkbox.parentNode.insertBefore(totalAmount, checkbox.nextElementSibling);
 
-    checkbox.addEventListener('change', function (e) {
-        if (jsFramework.checked === true) {
+    checkbox.addEventListener('change', function () {
+        if (all.checked) {
+            value += 200;
+            console.log(value);
+
+        } else {
+            value = 0;
+        }
+
+        if (jsFramework.checked) {
             express.disabled = true;
             express.parentNode.className = 'line-through-checkbox';
+            value += 100;
+            console.log(value);
 
         } else if (jsFramework.checked === false) {
             express.disabled = false;
             express.parentNode.className = '';
+            value = 0;
+
+        } else {
+            return value;
         }
 
         if (express.checked === true) {
             jsFramework.disabled = true;
             jsFramework.parentNode.className = 'line-through-checkbox';
+            value += 100;
+            console.log(value);
 
         } else if (express.checked === false) {
             jsFramework.disabled = false;
             jsFramework.parentNode.className = '';
+            value = 0;
 
+        } else {
+            return value;
         }
 
         if (jsLibs.checked === true) {
             node.disabled = true;
             node.parentNode.className = 'line-through-checkbox';
+            value += 100;
+            console.log(value);
 
         } else if (jsLibs.checked === false) {
             node.disabled = false;
             node.parentNode.className = '';
+            value = 0;
+
+        } else {
+            return value;
         }
 
         if (node.checked === true) {
             jsLibs.disabled = true;
             jsLibs.parentNode.className = 'line-through-checkbox';
+            value += 100;
+            console.log(value);
 
         } else if (node.checked === false) {
             jsLibs.disabled = false;
             jsLibs.parentNode.className = '';
+            value = 0;
+
         }
-
-        // Adding the total of each workshop up for a combined cost | This part was / is very hard for me to get.
-
         
-        
-        var isChecked = e.target.checked;
-
-       // if (isChecked) {
-            switch (isChecked) {
-
-                case (all.checked):
-                    value += 200; 
-                    break;
-
-                case (jsFramework.checked):
-                    value += 100;
-                    break;
-                    
-                case (jsLibs.checked):
-                    value += 100;
-                    break;
-
-                case (express.checked):
-                    value += 100;
-                    break;
-
-                case (node.checked):
-                    value += 100;
-                    break;
-
-                case (buildTools.checked):
-                    value += 100;
-                    break;
-
-                case (npm.checked):
-                    value += 100;
-                    break;
-
-                default:
-                    value = 0;
-                    break;
-           // }
+        if(npm.checked === true) {
+            value += 100;
+            console.log(value);
+        } else {
+            value = 0;
         }
-
-        totals = "TOTAL: $" + value + ".00";
-        totalAmount.innerHTML = totals;
-
+        
+        if(buildTools.checked === true)  {
+            value += 100;
+            console.log(value);
+        } else {
+            value = 0;
+        }
+        totalAmount.textContent = "TOTAL: $" + value + ".00";
     });
-
-
 }
 
 disableCheckbox();
