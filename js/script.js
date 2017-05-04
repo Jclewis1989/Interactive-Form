@@ -60,7 +60,7 @@ function displayThemes() {
                 color[i].style.display = 'block';
             }
         }
-    })
+    });
 
     design.addEventListener('change', function () {
         for (var i = 3; i < color.length; i++) {
@@ -73,7 +73,7 @@ function displayThemes() {
                 color[i].style.display = 'block';
             }
         }
-    })
+    });
 }
 
 displayThemes();
@@ -102,59 +102,19 @@ function disableCheckbox() {
     checkbox.parentNode.insertBefore(totalAmount, checkbox.nextElementSibling);
     var value = 0;
 
-    checkbox.addEventListener('change', function () {
-
-        if (jsFramework.checked) {
-            express.disabled = true;
-            express.parentNode.className = 'line-through-checkbox';
-
-        } else if (jsFramework.checked === false) {
-            express.disabled = false;
-            express.parentNode.className = '';
-        }
-
-        if (express.checked === true) {
-            jsFramework.disabled = true;
-            jsFramework.parentNode.className = 'line-through-checkbox';
-
-        } else if (express.checked === false) {
-            jsFramework.disabled = false;
-            jsFramework.parentNode.className = '';
-        }
-
-        if (jsLibs.checked === true) {
-            node.disabled = true;
-            node.parentNode.className = 'line-through-checkbox';
-
-        } else if (jsLibs.checked === false) {
-            node.disabled = false;
-            node.parentNode.className = '';
-        }
-
-        if (node.checked === true) {
-            jsLibs.disabled = true;
-            jsLibs.parentNode.className = 'line-through-checkbox';
-
-        } else if (node.checked === false) {
-            jsLibs.disabled = false;
-            jsLibs.parentNode.className = '';
-        }
-
-    });
-
     checkbox.addEventListener('change', function (e) {
 
-        var isChecked = e.target.checked
+        var isChecked = e.target.checked;
 
         for (var i = 0; i < checkbox.children.length; i++) {
             if (isChecked[i]) {
-                console.log(isChecked);
                 value += 100;
                 break;
             } else {
                 value = 0;
             }
         }
+
         if (jsFramework.checked) {
             express.disabled = true;
             express.parentNode.className = 'line-through-checkbox';
@@ -203,10 +163,162 @@ function disableCheckbox() {
             value += 100;
         }
 
+        if (all.checked === true) {
+            value += 200;
+        }
+
         totalAmount.innerHTML = 'Total: $' + value + '.00';
 
+
+
     });
+
+    // Must select at least one checkbox under the "Register for Activities" section of the form.
 
 }
 
 disableCheckbox();
+
+/*
+Display payment sections based on the payment option chosen in the select menu
+
+The "Credit Card" payment option should be selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
+
+When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden.
+
+When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
+*/
+
+function paymentMethod() {
+
+    // Select Box query Selectors
+    var payment = document.getElementById('payment');
+    var cc = document.getElementById('credit-card');
+
+    var creditCard = document.querySelector('#payment option[value="credit card"]');
+    var paypal = document.querySelector('#payment option[value="paypal"]');
+    var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
+
+    // var paypal = document.querySelector('#payment option[value="paypal"]');
+
+    // var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
+
+    var additionalPayment = document.querySelectorAll('p');
+    var paypalIndex = additionalPayment[0];
+    var bitcoinIndex = additionalPayment[1];
+
+    creditCard.selected = 'selected';
+    additionalPayment[0].style.display = 'none';
+    additionalPayment[1].style.display = 'none';
+
+    payment.addEventListener('change', function () {
+        if (payment.value === 'paypal') {
+            additionalPayment[0].style.display = 'block';
+        } else {
+            additionalPayment[0].style.display = 'none';
+            cc.style.display = 'none';
+        }
+
+        if (payment.value === 'bitcoin') {
+            additionalPayment[1].style.display = 'block';
+        } else {
+            additionalPayment[1].style.display = 'none';
+            cc.style.display = 'none'
+        }
+
+        if (payment.value === 'credit card') {
+            cc.style.display = 'block';
+        } else {
+            cc.style.display = 'none';
+        }
+
+
+    })
+}
+
+paymentMethod();
+
+/*
+If any of the following validation errors exist, prevent the user from submitting the form:
+
+Name field can't be blank
+
+Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like on dave@teamtreehouse.com for example.
+
+// If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
+
+Credit card field should only accept a number between 13 and 16 digits
+
+The zipcode field should accept a 5-digit number
+
+The CVV should only accept a number that is exactly 3 digits long
+
+Provide some kind of indication when there’s a validation error. The field’s borders could turn red, for example, or a message could appear near the field or at the top of the form
+
+There should be an error indication for the name field, email field, “Register for Activities” checkboxes, credit card number, zip code, and CVV
+
+When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
+
+*/
+
+// Name Function
+
+function name() {
+    // Create input variable
+    var inputE = document.querySelector('#name');
+    var input = document.querySelector("#name").value;
+    // Create error element
+    var error = document.createElement('p');
+    // Provide  class name for the p tag
+    error.className = 'error';
+    // Text content for the message
+    error.textContent = 'Please enter your Full Name';
+    // Append below the input field
+    document.body.appendChild(error);
+    inputE.parentNode.insertBefore(error, inputE.nextElementSibling);
+
+    if (input !== '') {
+        error.style.display = 'none'
+        return true;
+    } else if (input === '') {
+        error.style.display = 'block'
+        return false;
+    } else {
+        error.style.display = 'none';
+    }
+    console.log(error);
+}
+
+// Email Function
+
+function returnEmail() {
+    var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    var mail = document.getElementById('mail').value;
+    var mailE = document.getElementById('mail');
+    var error = document.createElement('p');
+    error.className = 'error';
+    error.textContent = 'Please enter a valid email address';
+    document.body.appendChild(error);
+    mailE.parentNode.insertBefore(error, mailE.nextElementSibling);
+
+    if (mail !== '') {
+        error.style.display = 'none';
+        return true;
+    } else if (mail === '' && !reg.test(mail)) {
+        error.style.display = 'block'
+        return false;
+    } else {
+        error.style.display = 'none';
+        return true;
+    }
+}
+
+
+
+
+var btn = document.querySelector('BUTTON');
+btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    name();
+    returnEmail();
+});

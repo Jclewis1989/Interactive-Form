@@ -158,6 +158,12 @@ button:hover {
   text-decoration: line-through;
 }
 
+.error {
+  color: #800000;
+  font-weight:bold;
+  font-size:14px;
+}
+
 /* =================================
   Media Queries
 ==================================== */
