@@ -167,13 +167,12 @@ function disableCheckbox() {
             value += 200;
         }
 
+
         totalAmount.innerHTML = 'Total: $' + value + '.00';
 
 
 
     });
-
-    // Must select at least one checkbox under the "Register for Activities" section of the form.
 
 }
 
@@ -264,29 +263,20 @@ When JavaScript is switched off or unavailable, all the form fields that need to
 // Name Function
 
 function name() {
-    // Create input variable
     var inputE = document.querySelector('#name');
     var input = document.querySelector("#name").value;
-    // Create error element
-    var error = document.createElement('p');
-    // Provide  class name for the p tag
-    error.className = 'error';
-    // Text content for the message
-    error.textContent = 'Please enter your Full Name';
-    // Append below the input field
-    document.body.appendChild(error);
-    inputE.parentNode.insertBefore(error, inputE.nextElementSibling);
 
     if (input !== '') {
-        error.style.display = 'none'
-        return true;
+        return true
     } else if (input === '') {
+        var error = document.createElement('p');
+        error.className = 'error';
+        error.textContent = 'Please enter your Full Name';
+        document.body.appendChild(error);
+        inputE.parentNode.insertBefore(error, inputE.nextElementSibling);
         error.style.display = 'block'
         return false;
-    } else {
-        error.style.display = 'none';
     }
-    console.log(error);
 }
 
 // Email Function
@@ -295,25 +285,79 @@ function returnEmail() {
     var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
     var mail = document.getElementById('mail').value;
     var mailE = document.getElementById('mail');
-    var error = document.createElement('p');
-    error.className = 'error';
-    error.textContent = 'Please enter a valid email address';
-    document.body.appendChild(error);
-    mailE.parentNode.insertBefore(error, mailE.nextElementSibling);
 
     if (mail !== '') {
-        error.style.display = 'none';
         return true;
     } else if (mail === '' && !reg.test(mail)) {
+        var error = document.createElement('p');
+        error.className = 'error';
+        error.textContent = 'Please enter a valid email address';
+        document.body.appendChild(error);
+        mailE.parentNode.insertBefore(error, mailE.nextElementSibling);
         error.style.display = 'block'
         return false;
-    } else {
-        error.style.display = 'none';
-        return true;
     }
 }
 
+function creditCardValidate() {
+    var ccNumElement = document.getElementById('cc-num');
 
+    var ccNum = document.getElementById('cc-num').value;
+
+    if (ccNum.length >= 13 && ccNum.length <= 16) {
+        return true;
+    } else if (ccNum.length > 17 || ccNum.length < 13) {
+        var error = document.createElement('p');
+        error.className = 'error';
+        error.textContent = 'Please enter a valid credit card number';
+        document.body.appendChild(error);
+        ccNumElement.parentNode.insertBefore(error, ccNumElement.nextElementSibling);
+        error.style.display = 'block';
+        return false;
+    }
+}
+
+function validateZip() {
+    var zip = document.getElementById('zip').value;
+    var zipElement = document.getElementById('zip');
+    if (zip.length === 5) {
+        return true
+    } else {
+        var error = document.createElement('p');
+        error.className = 'error';
+        error.textContent = 'Please enter a valid Zip Code of 5 Characters';
+        document.body.appendChild(error);
+        zipElement.parentNode.insertBefore(error, zipElement.nextElementSibling);
+        error.style.display = 'block';
+        return false;
+    }
+}
+
+function validateCvv() {
+    var cvvElement = document.getElementById('cvv');
+    var cvv = document.getElementById('cvv').value;
+    if (cvv.length === 3) {
+        return true
+    } else {
+        var error = document.createElement('p');
+        error.className = 'error';
+        error.textContent = 'Please enter your three digit security code';
+        document.body.appendChild(error);
+        cvvElement.parentNode.insertBefore(error, cvvElement.nextElementSibling);
+        error.style.display = 'block';
+        return false;
+    }
+}
+
+function validateCheckbox() {
+    var checkbox = document.querySelector('input[type="checkbox"]:checked');
+    if (!checkbox) {
+        alert("Please select at least one activity!");
+        return false;
+    } else {
+        return true;
+    }
+}
 
 
 var btn = document.querySelector('BUTTON');
@@ -321,4 +365,8 @@ btn.addEventListener('click', function (e) {
     e.preventDefault();
     name();
     returnEmail();
+    creditCardValidate();
+    validateZip();
+    validateCvv();
+    validateCheckbox();
 });
