@@ -328,24 +328,17 @@ function validateCheckbox() {
 
 var form = document.querySelector('form');
 form.addEventListener('submit', function (e) {
-    if (name() === true && creditCardValidate() === true && validateZip() === true && validateCvv() === true && validateCheckbox === true && returnEmail() === true) {
-        var inputE = document.querySelector('#name');
-        inputE.className = '';
-        
-        // You will need to do an if statement for each function!
-
-        var mailError = document.getElementById('mail');
-        mailError.className = '';
-
-        var ccNumElement = document.getElementById('cc-num');
-        ccNumElement.className = '';
-
-        var zipElement = document.getElementById('zip');
-        zipElement.className = '';
-
+    if (name() && creditCardValidate() && validateZip() && validateCvv() && returnEmail()) {
         var cvvElement = document.getElementById('cvv');
         cvvElement.className = '';
-
+        var zipElement = document.getElementById('zip');
+        zipElement.className = '';
+        var ccNumElement = document.getElementById('cc-num');
+        ccNumElement.className = '';
+        var mailError = document.getElementById('mail');
+        mailError.className = '';
+        var inputE = document.querySelector('#name');
+        inputE.className = '';
         return true;
     } else {
         e.preventDefault();
@@ -358,4 +351,6 @@ form.addEventListener('submit', function (e) {
         console.log("Failed a test");
         return false;
     }
+
+
 });
