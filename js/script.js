@@ -269,15 +269,15 @@ function validateEmail(email) {
 }
 
 function returnEmail() {
-  var mail = document.getElementById('mail').value;
-  if(mail === null) {
-    validateEmail(mail);
-    return true;
-} else {
-  var mailError = document.getElementById('mail');
-  mailError.className = 'error';
-  return false;
-}
+    var mail = document.getElementById('mail').value;
+    if (mail === null || mail !== null) {
+        validateEmail(mail);
+        return true;
+    } else {
+        var mailError = document.getElementById('mail');
+        mailError.className = 'error';
+        return false;
+    }
 }
 
 function creditCardValidate() {
@@ -288,7 +288,7 @@ function creditCardValidate() {
     if (ccNum.length >= 13 && ccNum.length <= 16 && !isNaN(ccNum)) {
         return true;
     } else {
-      ccNumElement.className = 'error';
+        ccNumElement.className = 'error';
         return false;
     }
 }
@@ -310,7 +310,7 @@ function validateCvv() {
     if (cvv.length === 3 && !isNaN(cvv)) {
         return true
     } else {
-      cvvElement.className = 'error';
+        cvvElement.className = 'error';
         return false;
     }
 }
@@ -318,7 +318,7 @@ function validateCvv() {
 function validateCheckbox() {
     var checkbox = document.querySelector('input[type="checkbox"]:checked');
     if (checkbox) {
-      return true;
+        return true;
     } else {
         alert("Please select at least one activity!");
         return false;
@@ -328,18 +328,18 @@ function validateCheckbox() {
 
 var form = document.querySelector('form');
 form.addEventListener('submit', function (e) {
-    if(name() === true && creditCardValidate() === true && validateZip() === true && validateCvv() === true && validateCheckbox === true && returnEmail() === true) {
-      console.log("Passed all tests");
-      return true;
+    if (name() === true && creditCardValidate() === true && validateZip() === true && validateCvv() === true && validateCheckbox === true && returnEmail() === true) {
+        console.log("Passed all tests");
+        return true;
     } else {
-      e.preventDefault();
-      name();
-      creditCardValidate();
-      validateZip();
-      validateCvv();
-      validateCheckbox();
-      returnEmail();
-      console.log("Failed a test");
-      return false;
+        e.preventDefault();
+        name();
+        creditCardValidate();
+        validateZip();
+        validateCvv();
+        validateCheckbox();
+        returnEmail();
+        console.log("Failed a test");
+        return false;
     }
 });
