@@ -159,9 +159,7 @@ button:hover {
 }
 
 .error {
-  color: #800000;
-  font-weight:bold;
-  font-size:14px;
+  border: 2px solid #800000;
 }
 
 /* =================================

@@ -180,11 +180,8 @@ disableCheckbox();
 
 /*
 Display payment sections based on the payment option chosen in the select menu
-
 The "Credit Card" payment option should be selected by default, display the #credit-card div, and hide the "Paypal" and "Bitcoin information.
-
 When a user selects the "PayPal" payment option, the Paypal information should display, and the credit card and “Bitcoin” information should be hidden.
-
 When a user selects the "Bitcoin" payment option, the Bitcoin information should display, and the credit card and “PayPal” information should be hidden.
 */
 
@@ -239,25 +236,15 @@ paymentMethod();
 
 /*
 If any of the following validation errors exist, prevent the user from submitting the form:
-
 Name field can't be blank
-
 Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted like on dave@teamtreehouse.com for example.
-
 // If the selected payment option is "Credit Card," make sure the user has supplied a credit card number, a zip code, and a 3 number CVV value before the form can be submitted.
-
 Credit card field should only accept a number between 13 and 16 digits
-
 The zipcode field should accept a 5-digit number
-
 The CVV should only accept a number that is exactly 3 digits long
-
 Provide some kind of indication when there’s a validation error. The field’s borders could turn red, for example, or a message could appear near the field or at the top of the form
-
 There should be an error indication for the name field, email field, “Register for Activities” checkboxes, credit card number, zip code, and CVV
-
 When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
-
 */
 
 // Name Function
@@ -266,37 +253,31 @@ function name() {
     var inputE = document.querySelector('#name');
     var input = document.querySelector("#name").value;
 
-    if (input !== '') {
+    if (isNaN(input)) {
         return true
-    } else if (input === '') {
-        var error = document.createElement('p');
-        error.className = 'error';
-        error.textContent = 'Please enter your Full Name';
-        document.body.appendChild(error);
-        inputE.parentNode.insertBefore(error, inputE.nextElementSibling);
-        error.style.display = 'block'
+    } else {
+        inputE.className = 'error';
         return false;
     }
 }
 
 // Email Function
 
-function returnEmail() {
-    var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    var mail = document.getElementById('mail').value;
-    var mailE = document.getElementById('mail');
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
 
-    if (mail !== '') {
-        return true;
-    } else if (mail === '' && !reg.test(mail)) {
-        var error = document.createElement('p');
-        error.className = 'error';
-        error.textContent = 'Please enter a valid email address';
-        document.body.appendChild(error);
-        mailE.parentNode.insertBefore(error, mailE.nextElementSibling);
-        error.style.display = 'block'
-        return false;
-    }
+function returnEmail() {
+  var mail = document.getElementById('mail').value;
+  if(mail === null) {
+    validateEmail(mail);
+    return true;
+} else {
+  var mailError = document.getElementById('mail');
+  mailError.className = 'error';
+  return false;
+}
 }
 
 function creditCardValidate() {
@@ -304,15 +285,10 @@ function creditCardValidate() {
 
     var ccNum = document.getElementById('cc-num').value;
 
-    if (ccNum.length >= 13 && ccNum.length <= 16) {
+    if (ccNum.length >= 13 && ccNum.length <= 16 && !isNaN(ccNum)) {
         return true;
-    } else if (ccNum.length > 17 || ccNum.length < 13) {
-        var error = document.createElement('p');
-        error.className = 'error';
-        error.textContent = 'Please enter a valid credit card number';
-        document.body.appendChild(error);
-        ccNumElement.parentNode.insertBefore(error, ccNumElement.nextElementSibling);
-        error.style.display = 'block';
+    } else {
+      ccNumElement.className = 'error';
         return false;
     }
 }
@@ -320,15 +296,10 @@ function creditCardValidate() {
 function validateZip() {
     var zip = document.getElementById('zip').value;
     var zipElement = document.getElementById('zip');
-    if (zip.length === 5) {
+    if (zip.length === 5 && !isNaN(zip)) {
         return true
     } else {
-        var error = document.createElement('p');
-        error.className = 'error';
-        error.textContent = 'Please enter a valid Zip Code of 5 Characters';
-        document.body.appendChild(error);
-        zipElement.parentNode.insertBefore(error, zipElement.nextElementSibling);
-        error.style.display = 'block';
+        zipElement.className = 'error'
         return false;
     }
 }
@@ -336,37 +307,39 @@ function validateZip() {
 function validateCvv() {
     var cvvElement = document.getElementById('cvv');
     var cvv = document.getElementById('cvv').value;
-    if (cvv.length === 3) {
+    if (cvv.length === 3 && !isNaN(cvv)) {
         return true
     } else {
-        var error = document.createElement('p');
-        error.className = 'error';
-        error.textContent = 'Please enter your three digit security code';
-        document.body.appendChild(error);
-        cvvElement.parentNode.insertBefore(error, cvvElement.nextElementSibling);
-        error.style.display = 'block';
+      cvvElement.className = 'error';
         return false;
     }
 }
 
 function validateCheckbox() {
     var checkbox = document.querySelector('input[type="checkbox"]:checked');
-    if (!checkbox) {
+    if (checkbox) {
+      return true;
+    } else {
         alert("Please select at least one activity!");
         return false;
-    } else {
-        return true;
     }
 }
 
 
-var btn = document.querySelector('BUTTON');
-btn.addEventListener('click', function (e) {
-    e.preventDefault();
-    name();
-    returnEmail();
-    creditCardValidate();
-    validateZip();
-    validateCvv();
-    validateCheckbox();
+var form = document.querySelector('form');
+form.addEventListener('submit', function (e) {
+    if(name() === true && creditCardValidate() === true && validateZip() === true && validateCvv() === true && validateCheckbox === true && returnEmail() === true) {
+      console.log("Passed all tests");
+      return true;
+    } else {
+      e.preventDefault();
+      name();
+      creditCardValidate();
+      validateZip();
+      validateCvv();
+      validateCheckbox();
+      returnEmail();
+      console.log("Failed a test");
+      return false;
+    }
 });
