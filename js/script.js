@@ -270,8 +270,8 @@ function validateEmail(email) {
 
 function returnEmail() {
     var mail = document.getElementById('mail').value;
-    if (mail === null || mail !== null) {
-        validateEmail(mail);
+    if (validateEmail(mail)) {
+        console.log("Email works");
         return true;
     } else {
         var mailError = document.getElementById('mail');
@@ -329,7 +329,23 @@ function validateCheckbox() {
 var form = document.querySelector('form');
 form.addEventListener('submit', function (e) {
     if (name() === true && creditCardValidate() === true && validateZip() === true && validateCvv() === true && validateCheckbox === true && returnEmail() === true) {
-        console.log("Passed all tests");
+        var inputE = document.querySelector('#name');
+        inputE.className = '';
+        
+        // You will need to do an if statement for each function!
+
+        var mailError = document.getElementById('mail');
+        mailError.className = '';
+
+        var ccNumElement = document.getElementById('cc-num');
+        ccNumElement.className = '';
+
+        var zipElement = document.getElementById('zip');
+        zipElement.className = '';
+
+        var cvvElement = document.getElementById('cvv');
+        cvvElement.className = '';
+
         return true;
     } else {
         e.preventDefault();
