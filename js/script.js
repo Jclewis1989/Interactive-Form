@@ -250,67 +250,79 @@ When JavaScript is switched off or unavailable, all the form fields that need to
 // Name Function
 
 function name() {
-    var inputE = document.querySelector('#name');
-    var input = document.querySelector("#name").value;
+    var inputE = document.querySelector('#name').value;
+    var input = document.querySelector("#name");
 
-    if (isNaN(input)) {
+    if (isNaN(inputE)) {
+        console.log("NAME PASS");
         return true
     } else {
-        inputE.className = 'error';
+        input.className = 'error';
+        console.log("NAME ERROR");
         return false;
     }
 }
 
 // Email Function
 
-function validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
-
 function returnEmail() {
-    var mail = document.getElementById('mail').value;
-    if (validateEmail(mail)) {
-        console.log("Email works");
-        return true;
+    var mail = document.getElementById('mail');
+    var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (re.test(mail.value)) {
+        console.log("Email PASS");
+        return true
     } else {
-        var mailError = document.getElementById('mail');
-        mailError.className = 'error';
+        mail.className = 'error';
+        console.log("EMAIL ERROR");
         return false;
     }
 }
 
-function creditCardValidate() {
-    var ccNumElement = document.getElementById('cc-num');
 
+
+function creditCardValidate() {
+    var additionalPayment = document.querySelectorAll('p');
+    var ccNumE = document.getElementById('cc-num');
+    var paypal = document.querySelector('#payment option[value="paypal"]');
+    var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
     var ccNum = document.getElementById('cc-num').value;
 
-    if (ccNum.length >= 13 && ccNum.length <= 16 && !isNaN(ccNum)) {
+    if (ccNum.length >= 13 && ccNum.length <= 16 && !isNaN(ccNum) || paypal.selected === true || bitcoin.selected === true) {
+        console.log("CC# PASS");
         return true;
     } else {
-        ccNumElement.className = 'error';
+        ccNumE.className = 'error';
+        console.log("Credit Card ERROR");
         return false;
     }
 }
 
 function validateZip() {
+    var paypal = document.querySelector('#payment option[value="paypal"]');
+    var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
     var zip = document.getElementById('zip').value;
     var zipElement = document.getElementById('zip');
-    if (zip.length === 5 && !isNaN(zip)) {
+    if (zip.length === 5 && !isNaN(zip) || paypal.selected === true || bitcoin.selected === true) {
+        console.log("ZIP PASS");
         return true
     } else {
         zipElement.className = 'error'
+        console.log("ZIP ERROR");
         return false;
     }
 }
 
 function validateCvv() {
+    var paypal = document.querySelector('#payment option[value="paypal"]');
+    var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
     var cvvElement = document.getElementById('cvv');
     var cvv = document.getElementById('cvv').value;
-    if (cvv.length === 3 && !isNaN(cvv)) {
+    if (cvv.length === 3 && !isNaN(cvv) || paypal.selected === true || bitcoin.selected === true) {
+        console.log("CVV PASS");
         return true
     } else {
         cvvElement.className = 'error';
+        console.log("CVV ERROR");
         return false;
     }
 }
@@ -325,32 +337,20 @@ function validateCheckbox() {
     }
 }
 
-
 var form = document.querySelector('form');
 form.addEventListener('submit', function (e) {
-    if (name() && creditCardValidate() && validateZip() && validateCvv() && returnEmail()) {
-        var cvvElement = document.getElementById('cvv');
-        cvvElement.className = '';
-        var zipElement = document.getElementById('zip');
-        zipElement.className = '';
-        var ccNumElement = document.getElementById('cc-num');
-        ccNumElement.className = '';
-        var mailError = document.getElementById('mail');
-        mailError.className = '';
-        var inputE = document.querySelector('#name');
-        inputE.className = '';
+    if (name() === true && creditCardValidate() === true && validateZip() === true && validateCvv() === true && returnEmail() === true && validateCheckbox() === true) {
+        console.log("Passed test");
         return true;
     } else {
         e.preventDefault();
         name();
-        creditCardValidate();
-        validateZip();
-        validateCvv();
-        validateCheckbox();
         returnEmail();
+        creditCardValidate();
+        validateCvv();
+        validateZip();
+        validateCheckbox();
         console.log("Failed a test");
         return false;
     }
-
-
 });
