@@ -11,26 +11,25 @@ window.addEventListener('load', function () {
 
 // function displayJobRole() {
 
-    // Input element
-    var input = document.createElement('input');
-    input.type = 'text';
-    input.id = 'other-title';
-    input.placeholder = "Your Job Role";
+// Input element
+var input = document.createElement('input');
+input.type = 'text';
+input.id = 'other-title';
+input.placeholder = "Your Job Role";
 
-    // Locate parent node & create a second node with value for select element
-    var parent = document.getElementById('title');
+// Locate parent node & create a second node with value for select element
+var parent = document.getElementById('title');
 
-    // Function logic to hide and show based off a select value of 'other'
-    parent.addEventListener('change', function () {
-        if (parent.value === 'other') {
-            parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'block';
-        } else if (parent.value !== 'other') {
-            parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'none';
-        } else {
-            parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'block';
-        }
-    });
-}
+// Function logic to hide and show based off a select value of 'other'
+parent.addEventListener('change', function () {
+    if (parent.value === 'other') {
+        parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'block';
+    } else if (parent.value !== 'other') {
+        parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'none';
+    } else {
+        parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'block';
+    }
+});
 
 // displayJobRole();
 
