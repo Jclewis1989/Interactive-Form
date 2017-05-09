@@ -9,29 +9,23 @@ window.addEventListener('load', function () {
 
 // Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
 
-// function displayJobRole() {
+function displayJobRole() {
+    var jobRole = document.querySelector('#other-title');
+    var parent = document.querySelector('#title');
+    jobRole.style.display = 'none';
 
-// Input element
-var input = document.createElement('input');
-input.type = 'text';
-input.id = 'other-title';
-input.placeholder = "Your Job Role";
+    // Function logic to hide and show based off a select value of 'other'
+    parent.addEventListener('change', function () {
+        if (parent.value === 'other') {
+            jobRole.style.display = 'block';
+        } else {
+            jobRole.style.display = 'none';
+        }
+    });
 
-// Locate parent node & create a second node with value for select element
-var parent = document.getElementById('title');
+}
 
-// Function logic to hide and show based off a select value of 'other'
-parent.addEventListener('change', function () {
-    if (parent.value === 'other') {
-        parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'block';
-    } else if (parent.value !== 'other') {
-        parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'none';
-    } else {
-        parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'block';
-    }
-});
-
-// displayJobRole();
+displayJobRole();
 
 
 
