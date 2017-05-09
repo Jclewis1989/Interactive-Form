@@ -9,7 +9,7 @@ window.addEventListener('load', function () {
 
 // Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
 
-function displayJobRole() {
+// function displayJobRole() {
 
     // Input element
     var input = document.createElement('input');
@@ -24,13 +24,15 @@ function displayJobRole() {
     parent.addEventListener('change', function () {
         if (parent.value === 'other') {
             parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'block';
-        } else {
+        } else if (parent.value !== 'other') {
             parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'none';
+        } else {
+            parent.parentNode.insertBefore(input, parent.nextSibling).style.display = 'block';
         }
     });
 }
 
-displayJobRole();
+// displayJobRole();
 
 
 
