@@ -1,3 +1,37 @@
+// Global Variables
+var jobRole = document.querySelector('#other-title');
+var title = document.querySelector('#title');
+var design = document.getElementById('design');
+var color = document.getElementById('color');
+var checkbox = document.querySelector('.activities');
+var all = document.querySelector('input[name="all"]');
+var jsFramework = document.querySelector('input[name="js-frameworks"]');
+var jsLibs = document.querySelector('input[name="js-libs"]');
+var express = document.querySelector('input[name="express"]');
+var node = document.querySelector('input[name="node"]');
+var buildTools = document.querySelector('input[name="build-tools"]');
+var npm = document.querySelector('input[name="npm"]');
+var totalAmount = document.createElement('h2');
+var payment = document.getElementById('payment');
+var cc = document.getElementById('credit-card');
+var creditCard = document.querySelector('#payment option[value="credit card"]');
+var paypal = document.querySelector('#payment option[value="paypal"]');
+var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
+var additionalPayment = document.querySelectorAll('p');
+var paypalIndex = additionalPayment[0];
+var bitcoinIndex = additionalPayment[1];
+checkbox.parentNode.insertBefore(totalAmount, checkbox.nextElementSibling);
+var value = 0;
+var additionalPayment = document.querySelectorAll('p');
+var ccNumE = document.getElementById('cc-num');
+var paypal = document.querySelector('#payment option[value="paypal"]');
+var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
+var zipElement = document.getElementById('zip');
+var cvvElement = document.getElementById('cvv');
+var input = document.querySelector("#name");
+var mail = document.getElementById('mail');
+var activities = document.querySelector('.activities');
+
 // When the page loads, give focus to the first text field
 
 window.addEventListener('load', function () {
@@ -6,44 +40,27 @@ window.addEventListener('load', function () {
 });
 
 // A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
-
 // Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
 
 function displayJobRole() {
-    var jobRole = document.querySelector('#other-title');
-    var parent = document.querySelector('#title');
     jobRole.style.display = 'none';
-
     // Function logic to hide and show based off a select value of 'other'
-    parent.addEventListener('change', function () {
-        if (parent.value === 'other') {
+    title.addEventListener('change', function () {
+        if (title.value === 'other') {
             jobRole.style.display = 'block';
         } else {
             jobRole.style.display = 'none';
         }
     });
-
 }
-
 displayJobRole();
 
-
-
 // For the T-Shirt color menu, only display the color options that match the design selected in the "Design" menu.
-
 // If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," "Dark Slate Grey," and "Gold."
-
 // If the user selects "Theme - I ♥ JS" then the color menu should only display "Tomato," "Steel Blue," and "Dim Grey."
 
 
 function displayThemes() {
-    // Identifying variables first
-    var design = document.getElementById('design');
-    var color = document.getElementById('color');
-    // color.value = 'Please Select Your Color';
-
-    // Items within the select inputs
-
     design.addEventListener('change', function () {
         for (var i = 0; i < color.length - 3; i++) {
             var colors = color[i];
@@ -70,7 +87,6 @@ function displayThemes() {
         }
     });
 }
-
 displayThemes();
 
 
@@ -81,26 +97,8 @@ As a user selects activities, a running total should display below the list of c
 
 function disableCheckbox() {
 
-    // Checkbox approach
-    var checkbox = document.querySelector('.activities');
-
-
-    // Document Name approach
-    var all = document.querySelector('input[name="all"]');
-    var jsFramework = document.querySelector('input[name="js-frameworks"]');
-    var jsLibs = document.querySelector('input[name="js-libs"]');
-    var express = document.querySelector('input[name="express"]');
-    var node = document.querySelector('input[name="node"]');
-    var buildTools = document.querySelector('input[name="build-tools"]');
-    var npm = document.querySelector('input[name="npm"]');
-    var totalAmount = document.createElement('h2');
-    checkbox.parentNode.insertBefore(totalAmount, checkbox.nextElementSibling);
-    var value = 0;
-
     checkbox.addEventListener('change', function (e) {
-
         var isChecked = e.target.checked;
-
         for (var i = 0; i < checkbox.children.length; i++) {
             if (isChecked[i]) {
                 value += 100;
@@ -161,16 +159,9 @@ function disableCheckbox() {
         if (all.checked === true) {
             value += 200;
         }
-
-
         totalAmount.innerHTML = 'Total: $' + value + '.00';
-
-
-
     });
-
 }
-
 disableCheckbox();
 
 /*
@@ -181,22 +172,6 @@ When a user selects the "Bitcoin" payment option, the Bitcoin information should
 */
 
 function paymentMethod() {
-
-    // Select Box query Selectors
-    var payment = document.getElementById('payment');
-    var cc = document.getElementById('credit-card');
-
-    var creditCard = document.querySelector('#payment option[value="credit card"]');
-    var paypal = document.querySelector('#payment option[value="paypal"]');
-    var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
-
-    // var paypal = document.querySelector('#payment option[value="paypal"]');
-
-    // var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
-
-    var additionalPayment = document.querySelectorAll('p');
-    var paypalIndex = additionalPayment[0];
-    var bitcoinIndex = additionalPayment[1];
 
     creditCard.selected = 'selected';
     additionalPayment[0].style.display = 'none';
@@ -222,11 +197,8 @@ function paymentMethod() {
         } else {
             cc.style.display = 'none';
         }
-
-
     })
 }
-
 paymentMethod();
 
 /*
@@ -242,14 +214,12 @@ There should be an error indication for the name field, email field, “Register
 When JavaScript is switched off or unavailable, all the form fields that need to be filled out should be visible. For example, the “Your Job Role” text field should be visible on the page when JavaScript is switched off.
 */
 
-// Name Function
-
+// Validate the name field letters only. No numbers.
 function name() {
     var inputE = document.querySelector('#name').value;
-    var input = document.querySelector("#name");
-
     if (isNaN(inputE)) {
         console.log("NAME PASS");
+        input.className = 'clear';
         return true
     } else {
         input.className = 'error';
@@ -258,13 +228,12 @@ function name() {
     }
 }
 
-// Email Function
-
+// Using a regular expression for my email validation
 function returnEmail() {
-    var mail = document.getElementById('mail');
     var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (re.test(mail.value)) {
         console.log("Email PASS");
+        mail.className = 'clear';
         return true
     } else {
         mail.className = 'error';
@@ -273,17 +242,12 @@ function returnEmail() {
     }
 }
 
-
-
+// Validating credit card for number | Also creating statements to disable validation if paypal or bitcoin are selected
 function creditCardValidate() {
-    var additionalPayment = document.querySelectorAll('p');
-    var ccNumE = document.getElementById('cc-num');
-    var paypal = document.querySelector('#payment option[value="paypal"]');
-    var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
-    var ccNum = document.getElementById('cc-num').value;
-
+    var ccNum = document.getElementById('cc-num').value; // Not sure why, but this variable only works within the scope of this function
     if (ccNum.length >= 13 && ccNum.length <= 16 && !isNaN(ccNum) || paypal.selected === true || bitcoin.selected === true) {
         console.log("CC# PASS");
+        ccNumE.className = 'clear';
         return true;
     } else {
         ccNumE.className = 'error';
@@ -292,13 +256,12 @@ function creditCardValidate() {
     }
 }
 
+// Zip code must be 5 characters exactly and numbers only
 function validateZip() {
-    var paypal = document.querySelector('#payment option[value="paypal"]');
-    var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
-    var zip = document.getElementById('zip').value;
-    var zipElement = document.getElementById('zip');
+    var zip = document.getElementById('zip').value; // Not sure why, but this variable only works within the scope of this function
     if (zip.length === 5 && !isNaN(zip) || paypal.selected === true || bitcoin.selected === true) {
         console.log("ZIP PASS");
+        zipElement.className = 'clear';
         return true
     } else {
         zipElement.className = 'error'
@@ -307,13 +270,12 @@ function validateZip() {
     }
 }
 
+// Cvv must be three characters exactly and numbers only
 function validateCvv() {
-    var paypal = document.querySelector('#payment option[value="paypal"]');
-    var bitcoin = document.querySelector('#payment option[value="bitcoin"]');
-    var cvvElement = document.getElementById('cvv');
     var cvv = document.getElementById('cvv').value;
     if (cvv.length === 3 && !isNaN(cvv) || paypal.selected === true || bitcoin.selected === true) {
         console.log("CVV PASS");
+        cvvElement.className = 'clear';
         return true
     } else {
         cvvElement.className = 'error';
@@ -323,29 +285,27 @@ function validateCvv() {
 }
 
 function validateCheckbox() {
-    var checkbox = document.querySelector('input[type="checkbox"]:checked');
-    if (checkbox) {
+    var checkboxElement = document.querySelector('input[type="checkbox"]:checked');
+    if (checkboxElement) {
+        activities.className = 'clear';
         return true;
     } else {
-        alert("Please select at least one activity!");
+        activities.className = 'error';
         return false;
     }
 }
 
+function clearCheckbox() {
+    var checkboxElement = document.querySelector('input[type="checkbox"]:checked');
+    var msg = document.createElement('p');
+}
+
 var form = document.querySelector('form');
 form.addEventListener('submit', function (e) {
-    if (name() === true && creditCardValidate() === true && validateZip() === true && validateCvv() === true && returnEmail() === true && validateCheckbox() === true) {
+    if (name()&& returnEmail()&& validateCheckbox()&& creditCardValidate() && validateZip() && validateCvv()) {
         console.log("Passed test");
-        return true;
     } else {
         e.preventDefault();
-        name();
-        returnEmail();
-        creditCardValidate();
-        validateCvv();
-        validateZip();
-        validateCheckbox();
-        console.log("Failed a test");
-        return false;
     }
+
 });
