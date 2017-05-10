@@ -295,17 +295,19 @@ function validateCheckbox() {
     }
 }
 
-function clearCheckbox() {
-    var checkboxElement = document.querySelector('input[type="checkbox"]:checked');
-    var msg = document.createElement('p');
-}
-
 var form = document.querySelector('form');
 form.addEventListener('submit', function (e) {
-    if (name()&& returnEmail()&& validateCheckbox()&& creditCardValidate() && validateZip() && validateCvv()) {
+    if (name() === true && returnEmail() === true && validateCheckbox() === true && creditCardValidate() === true && validateZip() === true && validateCvv() === true) {
         console.log("Passed test");
+        return true;
     } else {
         e.preventDefault();
+        name();
+        returnEmail();
+        validateCheckbox();
+        creditCardValidate();
+        validateZip();
+        validateCvv();
     }
 
 });
