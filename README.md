@@ -1,6 +1,6 @@
 # Interactive-Form with Complex Form Validation
 
-Complex Form Validation with JavaScript, HTML and CSS. This was originally a Team Tree House Project as part of a JavaScript Tech Degree, however I have taken this knowledge and applied it to several other personal and freelacne projects
+Complex Form Validation with JavaScript, HTML and CSS. This was originally a Team Tree House Project as part of a JavaScript Tech Degree, however I have taken this knowledge and applied it to several other personal and freelance projects
 
 ## Getting Started
 
@@ -9,10 +9,6 @@ Clone, fork or download the repo. Open the HTML file after extracting the zip to
 ### Prerequisites
 
 You will need JavaScript enabled in your web browser
-
-## Running the tests
-
-Explain how to run the automated tests for this system
 
 ### Break down into end to end tests
 
